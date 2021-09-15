@@ -41,19 +41,37 @@ def gestion_productos():
         }, 201
 
 
-@app.route("/producto/<int:id>", methods=['GET'])
+@app.route("/producto/<int:id>", methods=['GET','PUT','DELETE'])
 def gestion_producto(id):
     total_productos = len(productos)
     if id < total_productos:
-        return {
-            "content": productos[id],
-            "message": None
-        }, 200
-    else:
-        return {
-            "message": "Producto no encontrado",
-            "content": None
-        }, 404
+        if request.method == "GET":
+            return {
+                "content": productos[id],
+                "message": None
+            }, 200
+        elif request.method == "PUT":
+            data = request.get_json()
+            productos[id] = data
+
+            return {
+                "content": productos[id],
+                "message": "Producto actualizado exitosamente"
+            }, 201
+
+        elif request.method == "DELETE":
+            del productos[id]
+
+            return {
+                "content": None,
+                "message": "Producto eliminado exitosamente"
+            }
+
+        else:
+            return {
+                "message": "Producto no encontrado",
+                "content": None
+            }, 404
 
 
 if __name__ == "__main__":
