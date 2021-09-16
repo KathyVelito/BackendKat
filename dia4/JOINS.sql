@@ -1,0 +1,27 @@
+USE pruebas;
+
+select * from historial_vacunaciones
+		INNER JOIN medicos
+			ON historial_vacunaciones.medico_id = medicos.id
+            
+		INNER JOIN personas
+			ON historial_vacunaciones.paciente_id = personas.id;
+            
+DESC MEDICOS;
+
+INSERT INTO MEDICOS (CMP, NOMBRE, APELLIDO) VALUES ('129', 'JUAN', 'ZEGARRA');
+
+DESC HISTORIAL_VACUNACIONES;
+
+INSERT INTO HISTORIAL_VACUNACIONES (VACUNA, LOTE, FECHA, PACIENTE_ID)
+						VALUES	   ('ASTRAZENECA','15964', now(), 5);
+                        
+SELECT * FROM HISTORIAL_VACUNACIONES;
+
+SELECT * FROM MEDICOS where id = 1;
+
+SELECT * FROM MEDICOS LEFT JOIN HISTORIAL_VACUNACIONES
+					ON MEDICOS.ID = HISTORIAL_VACUNACIONES.MEDICO_ID;
+                    
+SELECT * FROM MEDICOS RIGHT JOIN HISTORIAL_VACUNACIONES
+					ON MEDICOS.ID = HISTORIAL_VACUNACIONES.MEDICO_ID;
